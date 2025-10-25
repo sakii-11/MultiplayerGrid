@@ -22,6 +22,7 @@ export default function App() {
   const [playerId, setPlayerId] = useState<string>("");
   const [onlineCount, setOnlineCount] = useState<number>(0);
   const [lockedUntil, setLockedUntil] = useState<number | null>(null);
+  const [step, setStep] = useState<number | null>(null); 
   const lockedUntilRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -87,6 +88,17 @@ export default function App() {
     });
   };
 
+  function getGridAtStep(step: number): string[] {
+  const replayGrid = Array(100).fill(null);
+  for (let i = 0; i <= step; i++) {
+    const { cellIndex, char } = history[i];
+    replayGrid[cellIndex] = char;
+  }
+  return replayGrid;
+  }
+
+  const displayedGrid = step === null ? grid : getGridAtStep(step);
+
   return (
     <div className="app">
       <header className="topbar">
@@ -95,8 +107,46 @@ export default function App() {
       </header>
 
       <main>
-        <GridView grid={grid} onPlace={placeChar} lockedUntil={lockedUntil} />
+      <GridView
+        grid={displayedGrid}
+        onPlace={(index, char) => {
+        if (step !== null) {
+          alert("Click on Live to make a move. You can't alter prev moves.");
+          return;
+        }
+        placeChar(index, char);
+        }}
+        lockedUntil={lockedUntil}
+        />
         <aside className="side">
+          <div className="card">
+            <h3>Prev Moves</h3>
+            <div className="time-controls">
+              <button
+                disabled={step === 0 || history.length === 0}
+                onClick={() => setStep(step === null ? history.length - 2 : Math.max(0, step - 1))}
+              >
+                ◀ Prev
+              </button>
+
+              <button
+                disabled={step === null}
+                onClick={() => setStep(step === null ? null : Math.min(history.length - 1, step + 1))}
+              >
+                ▶ Next
+              </button>
+
+              <button onClick={() => setStep(null)} disabled={step === null}>
+                🔴 Live
+              </button>
+
+              {step !== null && (
+                <div className="mono small">
+                  Showing move {step + 1} / {history.length}
+                </div>
+              )}
+            </div>
+          </div>
           <div className="card">
             <h3>Your ID</h3>
             <div className="mono">{playerId}</div>

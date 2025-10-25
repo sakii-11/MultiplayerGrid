@@ -281,3 +281,37 @@ button:last-child {
     max-width: 90vw;
   }
 }
+
+.time-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.time-controls button {
+  padding: 6px 10px;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.time-controls button:hover:not(:disabled) {
+  background: #e0e0e0;
+}
+
+.time-controls button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+
+.grid-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; 
+  width: 100%;
+}
