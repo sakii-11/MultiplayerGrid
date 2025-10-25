@@ -65,6 +65,5 @@ npm run dev
 ```
 frontend will be live at http://localhost:5173. You can play the game through this in real time.
 
----
 
 
