@@ -14,7 +14,7 @@
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/sakii-11/Multiplayer_Grid.git
+git clone https://github.com/sakii-11/MultiplayerGrid.git
 
 cd MultiplayerGrid
 ```
